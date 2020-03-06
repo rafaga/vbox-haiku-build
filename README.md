@@ -3,7 +3,7 @@ Haiku-OS Dev environment
 I made this to make an easy and hassle-free development environment in MacOS. because when you try to build Haiku-OS on MacOS you face two main problems:
 
 * Due to the fact that APFS / HFS+ is a non case-sensitive Filesystem by default, you need to create a case-sensitive partition on Disk and build everything there
-* llvm sometimes has serious bugs when you try to compile Haiku soruce code
+* LLVM on Mac has serious bugs when you try to compile Haiku soruce code
 
 Due to this I have made this recipe
 
