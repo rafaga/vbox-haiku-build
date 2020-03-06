@@ -18,24 +18,41 @@ Requirements (dependencies)
 * osxFUSE - to mount sshfs on File system
 * sshfs - to mount sshfs on File system
 
-Instalation
+Installation
 ------------
 
-If you have Homebrew you can run the following
+clone this repo and install the dependencies.
 
-brew install vagrant
-brew install ansible
-brew install sshfs
-vagrant install vagrant-sshfs
-vagrant install vagrant-vbguest
+If you have Homebrew you can run the following commands to install all the dependencies:
+
+`brew install vagrant`
+`brew install ansible`
+`brew install sshfs`
+
+and the following vagrant plugins:
+
+`vagrant install vagrant-sshfs`
+`vagrant install vagrant-vbguest`
 
 This installation is based on centOS 7 and build the x86-64 Haiku image
 
-Create here a directory named home, to access the Haiku Buildtools and Haiku Source code tree. This recipe will try to mount a sshfs on the 'home' directory. So you can edit the files easily.
+The current recipe shares the content of `/home/vagrant/` (where resides Haiku Buildtools and Haiku Source code tree) and mounts it in a directory named `home` in this same location. If for some reason the directory is not mounted when you run the vm, you can reinit the mount procedure using the command `vagrant sshfs`
+
+Running the environment
+------------
+to run this recipe you only need to invoke `vagrant up` from this directory, and everything will build up automatically. The process should run for a couple of hours to complete.
+
+When the process is complete you only need to run `vagrant ssh` ro access the vm to build Haiku. when you enter the vm there is 3 directories in the default folder.
+
+ * haiku : this directory contaimns all the source code for Haiku-OS
+ * buildtools: this directory contains the necesary tools to build Haiku
+ * generated.x86_64: Here resides the binary executables or the resulting ISO.
 
 Warning
 ----------
-Do not use vagrant destroy, unless you want to lose permanently any changes  made to the haiku source code or the buildtools. To turn on/off the Image correctly, you can use vagrant suspend and vagrant resume.
+To turn off the virtual machine do NOT use `vagrant destroy`, unless you want to lose permanently any changes have you made to the haiku source code or the buildtools. 
+
+To turn on/off the Image properly, you can use `vagrant suspend` and `vagrant resume`.
 
 
 
