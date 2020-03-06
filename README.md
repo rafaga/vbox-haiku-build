@@ -1,11 +1,13 @@
 Haiku-OS Dev environment
------------
-I made this to make an easy and hassle-free development environment in MacOS. because when you try to build Haiku-OS on MacOS you face two main problems:
+----------
+This recipe is an easy to create a development environment for Haiku-OS in MacOS. 
 
-* Due to the fact that APFS / HFS+ is a non case-sensitive Filesystem by default, you need to create a case-sensitive partition on Disk and build everything there
-* LLVM on Mac has serious bugs when you try to compile Haiku soruce code
+Why?
+----------
+because when you try to build Haiku-OS on MacOS you face two main problems:
 
-Due to this I have made this recipe
+* APFS / HFS+ is a non case-sensitive Filesystem by default ands the Haiku-OS build system depends on a case-sensitive filesystem, So you need to create a case-sensitive partition on Disk and build everything there.
+* LLVM on Mac has some serious bugs when you try to compile Haiku soruce code
 
 Requirements (dependencies)
 ------------
@@ -29,6 +31,12 @@ vagrant install vagrant-vbguest
 
 This installation is based on centOS 7 and build the x86-64 Haiku image
 
-Caveats
-------------
-Jam is installed in /usr/local/bin, so to run the Haiku build you need to execute /usr/local/bin/jam -q @nigthly-raw.
+Create here a directory named home, to access the Haiku Buildtools and Haiku Source code tree. This recipe will try to mount a sshfs on the 'home' directory. So you can edit the files easily.
+
+Warning
+----------
+Do not use vagrant destroy, unless you want to lose permanently any changes  made to the haiku source code or the buildtools. To turn on/off the Image correctly, you can use vagrant suspend and vagrant resume.
+
+
+
+
