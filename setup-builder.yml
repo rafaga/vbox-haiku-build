@@ -35,28 +35,51 @@
   - name: Cloning Haiku Buildtools
     git:
       repo: 'https://review.haiku-os.org/buildtools'
-      dest: /home/buildtools
+      dest: /home/vagrant/buildtools
       version: HEAD
       force: yes
   - name: Cloning Haiku sourcecode
     git:
       repo: 'https://review.haiku-os.org/haiku'
-      dest: /home/haiku
+      dest: /home/vagrant/haiku
       version: HEAD
       force: yes
+  - name: Change Ownership of haiku Source Directory
+    file:
+      path: /home/vagrant/haiku/
+      state: directory
+      recurse: yes
+      owner: vagrant
+      group: vagrant
+  - name: Change Ownership of haiku Buildtools Directory
+    file:
+      path: /home/vagrant/buildtools/
+      state: directory
+      recurse: yes
+      owner: vagrant
+      group: vagrant
   - name: Creation of binary target for Haiku
     file:
-      path: /home/haiku/generated.x86_64
+      path: /home/vagrant/generated.x86_64
       state: directory
+      owner: vagrant
+      group: vagrant
   - name: creating configuration to build Haiku cross-compiler buildtools
     shell:
-      cmd: /home/haiku/configure --build-cross-tools x86_64 /home/buildtools
-      chdir: /home/haiku/generated.x86_64/
+      cmd: /home/vagrant/haiku/configure --build-cross-tools x86_64 /home/vagrant/buildtools
+      chdir: /home/vagrant/generated.x86_64/
+  - name: Taking OWnership again on binary target folder
+    file:
+      path: /home/vagrant/generated.x86_64/
+      state: directory
+      recurse: yes
+      owner: vagrant
+      group: vagrant
   - name: Making jam
     make:
-      chdir: /home/buildtools/jam/
+      chdir: /home/vagrant/buildtools/jam/
   - name: Installing jam
     shell:
       cmd: ./jam0 install
-      chdir: /home/buildtools/jam/
+      chdir: /home/vagrant/buildtools/jam/
   

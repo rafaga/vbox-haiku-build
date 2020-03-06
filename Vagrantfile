@@ -71,7 +71,7 @@ Vagrant.configure("2") do |config|
     vbox.memory = 4096
   end
 
-  config.vm.synced_folder "home", "/home", type: "sshfs", reverse: true
+  config.vm.synced_folder "home", "/home/vagrant/", type: "sshfs", reverse: true
 
   config.vm.provision 'ansible', run: 'always', type: :ansible_local do |ansible|
   # ansible.galaxy_role_file = 'requirements.yml'
