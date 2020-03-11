@@ -36,7 +36,7 @@ and the following vagrant plugins:
 
 This installation is based on centOS 7 and build the x86-64 Haiku image
 
-The current recipe shares the content of `/home/vagrant/` (where resides Haiku Buildtools and Haiku Source code tree) and mounts it in a directory named `home` in this same location. If for some reason the directory is not mounted when you run the vm, you can reinit the mount procedure using the command `vagrant sshfs`
+The current recipe shares the content of `/home/vagrant/` (where resides Haiku Buildtools and Haiku Source code tree) and mounts it in a directory named `haiku` one level up from this directory (`../haiku`). If for some reason the directory is not mounted when you run the vm, you can init manually the mount procedure using the command `vagrant sshfs`
 
 Running the environment
 ------------
@@ -44,9 +44,9 @@ to run this recipe you only need to invoke `vagrant up` from this directory, and
 
 When the process is complete you only need to run `vagrant ssh` ro access the vm to build Haiku. when you enter the vm there is 3 directories in the default folder.
 
- * haiku : this directory contaimns all the source code for Haiku-OS
- * buildtools: this directory contains the necesary tools to build Haiku
- * generated.x86_64: Here resides the binary executables or the resulting ISO.
+* haiku : this directory contaimns all the source code for Haiku-OS
+* buildtools: this directory contains the necesary tools to build Haiku
+* generated.x86_64: Here resides the binary executables or the resulting ISO.
 
 Warning
 ----------
@@ -56,7 +56,7 @@ To turn on/off the Image properly, you can use `vagrant suspend` and `vagrant re
 
 TODO:
 -----------
-[] Migrate the ansible playbook to role
-[] Add more configurable architectures to build recipe
+- Migrate the ansible playbook to role
+- Add more configurable architectures to build recipe
 
 
