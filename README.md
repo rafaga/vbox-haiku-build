@@ -25,14 +25,14 @@ clone this repo and install the dependencies.
 
 If you have Homebrew you can run the following commands to install all the dependencies:
 
-`brew install vagrant`
-`brew install ansible`
-`brew install sshfs`
+- `brew install vagrant`
+- `brew install ansible`
+- `brew install sshfs`
 
 and the following vagrant plugins:
 
-`vagrant install vagrant-sshfs`
-`vagrant install vagrant-vbguest`
+- `vagrant install vagrant-sshfs`
+- `vagrant install vagrant-vbguest`
 
 This installation is based on centOS 7 and build the x86-64 Haiku image
 
@@ -54,6 +54,9 @@ To turn off the virtual machine do NOT use `vagrant destroy`, unless you want to
 
 To turn on/off the Image properly, you can use `vagrant suspend` and `vagrant resume`.
 
-
+TODO:
+-----------
+[] Migrate the ansible playbook to role
+[] Add more configurable architectures to build recipe
 
 

@@ -1,4 +1,5 @@
 # Specify filepatterns you want git to ignore.
-home
 .vagrant
 vagrant
+.DS_Store
+*.code-workspace

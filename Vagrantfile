@@ -60,10 +60,6 @@ Vagrant.configure("2") do |config|
   #   vb.memory = "1024"
   # end
 
-  config.vm.provision 'create Infrastructure for Vagrant build', type: :shell, inline: <<~'EOM'
-    sudo mkdir home -p
-  EOM
-
   config.vm.provider "virtualbox" do |vbox|
     vbox.name = "haiku_builder"
     vbox.linked_clone = false
@@ -71,12 +67,9 @@ Vagrant.configure("2") do |config|
     vbox.memory = 4096
   end
 
-  config.vm.synced_folder "home", "/home/vagrant/", type: "sshfs", reverse: true
+  config.vm.synced_folder "../haiku", "/home/vagrant/", type: "sshfs", reverse: true
 
-  config.vm.provision 'ansible', run: 'always', type: :ansible_local do |ansible|
-  # ansible.galaxy_role_file = 'requirements.yml'
-  # ansible.galaxy_roles_path = './roles'
-  # ansible.galaxy_command = 'ansible-galaxy install --role-file=%{role_file} --roles-path=%{roles_path}'
+  config.vm.provision 'ansible', type: :ansible_local do |ansible|
     ansible.become = true
     ansible.verbose = true
     ansible.playbook = 'setup-builder.yml'
