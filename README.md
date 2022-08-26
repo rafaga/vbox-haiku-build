@@ -7,7 +7,7 @@ Why?
 because when you try to build Haiku-OS on MacOS you face two main problems:
 
 * APFS / HFS+ is a non case-sensitive Filesystem by default ands the Haiku-OS build system depends on a case-sensitive filesystem, So you need to create a case-sensitive partition on Disk and build everything there.
-* LLVM on Mac has some serious bugs when you try to compile Haiku soruce code
+* LLVM on Mac has some serious bugs when you try to compile Haiku source code
 
 Requirements (dependencies)
 ------------
