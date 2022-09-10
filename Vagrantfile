@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "centos/7"
+  config.vm.box = "generic/rocky9"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -31,16 +31,15 @@ Vagrant.configure("2") do |config|
   # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
 
   # Create a private network, which allows host-only access to the machine
-  # using a specific IP.
+  # using a specific IP. 
   # config.vm.network "private_network", ip: "192.168.33.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
-  config.vm.network "public_network", bridge: [
-    "en0: Wi-Fi (Wireless)",
-    "en6: USB del iPhone",    
-  ]
+
+  config.vm.network "private_network", ip: "192.168.61.100"
+  config.vm.network "public_network", ip: "192.168.60.200", bridge: "en0: Wi-Fi"
 
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
@@ -67,12 +66,16 @@ Vagrant.configure("2") do |config|
     vbox.memory = 4096
   end
 
-  config.vm.synced_folder "../haiku", "/home/vagrant/", type: "sshfs", reverse: true
+  config.vm.synced_folder "home/", "/home/vagrant/",
+    type: "sshfs",reverse: true
+
+  config.vm.provision "file", source:"setup-builder.yml", destination:"/home/vagrant/setup-builder.yml"
 
   config.vm.provision 'ansible', type: :ansible_local do |ansible|
     ansible.become = true
     ansible.verbose = true
-    ansible.playbook = 'setup-builder.yml'
+    ansible.provisioning_path = "/home/vagrant"
+    ansible.playbook = "setup-builder.yml"
   end
   #
   # View the documentation for the provider you are using for more

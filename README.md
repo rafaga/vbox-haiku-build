@@ -11,12 +11,9 @@ because when you try to build Haiku-OS on MacOS you face two main problems:
 
 Requirements (dependencies)
 ------------
-* Red Hat's Ansible
+* Red Hat's Ansible on guest
 * HashiCorp's Vagrant
-    * vagrant-sshfs plugin
     * vagrant-vbguest plugin
-* osxFUSE - to mount sshfs on File system
-* sshfs - to mount sshfs on File system
 
 Installation
 ------------
@@ -27,14 +24,20 @@ If you have Homebrew you can run the following commands to install all the depen
 
 - `brew install vagrant`
 - `brew install ansible`
-- `brew install sshfs`
+
+and install:
+
+- MacFUSE
+- SSHFS complement
+- Follow instructions to intall on recent MacOS
 
 and the following vagrant plugins:
 
-- `vagrant install vagrant-sshfs`
-- `vagrant install vagrant-vbguest`
+- `vagrant plugin install vagrant-vbguest`
+- `vagrant plugin install vagrant-sshfs`
+- `vagrant plugin install vagrant-ansible-local`
 
-This installation is based on centOS 7 and build the x86-64 Haiku image
+This installation is based on Rocky Linux 9 and build the x86-64 Haiku image
 
 The current recipe shares the content of `/home/vagrant/` (where resides Haiku Buildtools and Haiku Source code tree) and mounts it in a directory named `haiku` one level up from this directory (`../haiku`). If for some reason the directory is not mounted when you run the vm, you can init manually the mount procedure using the command `vagrant sshfs`
 
@@ -57,6 +60,8 @@ To turn on/off the Image properly, you can use `vagrant suspend` and `vagrant re
 TODO:
 -----------
 - Migrate the ansible playbook to role
-- Add more configurable architectures to build recipe
+- Add ARM architectecture to Ansible Playbook
 
-
+Caveats:
+-----------
+- There is weird bvug that doesn't permit log into the box using `vagrant ssh`

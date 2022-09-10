@@ -2,44 +2,40 @@
 - hosts: all
   remote_user: root
   tasks:
-  - name: install the 'Development tools' package group
-    yum:
-      name: "@Development tools"
-      state: present
-  - name: ensure a list of packages installed
-    yum:
-      name: "{{ packages }}"
-    vars:
-      packages:
-      - git
-      - nasm
-      - autoconf
-      - automake
-      - texinfo
-      - flex
-      - bison
-      - gcc
-      - gcc-c++
-      - make
-      - glibc-devel
-      - zlib-devel
-      - xorriso
-      - curl-devel
-      - byacc
-      - libstdc++-static
-      - mtools 
-      - glibc-devel.x86_64
-      - libstdc++-devel.x86_64
+  - name: Installing development tools and dependencies
+    ansible.builtin.dnf:
+      name:
+      - git 
+      - nasm 
+      - autoconf 
+      - automake 
+      - texinfo 
+      - flex 
+      - bison 
+      - gcc 
+      - gcc-c++ 
+      - make 
+      - glibc-devel 
+      - zlib-devel 
+      - zstd 
+      - xorriso 
+      - curl-devel 
+      - byacc 
+      - libstdc++-static 
+      - glibc-devel.i686 
+      - libstdc++-devel.i686 
+      - libstdc++-devel 
       - python3
-      - wget
+      - libfdt
+      state: latest
+      enablerepo: devel
   - name: Cloning Haiku Buildtools
-    git:
+    ansible.builtin.git:
       repo: 'https://review.haiku-os.org/buildtools'
       dest: /home/vagrant/buildtools
       version: HEAD
-      force: yes
   - name: Cloning Haiku sourcecode
-    git:
+    ansible.builtin.git:
       repo: 'https://review.haiku-os.org/haiku'
       dest: /home/vagrant/haiku
       version: HEAD
@@ -66,9 +62,9 @@
       group: vagrant
   - name: creating configuration to build Haiku cross-compiler buildtools
     shell:
-      cmd: /home/vagrant/haiku/configure --build-cross-tools x86_64 /home/vagrant/buildtools
+      cmd: ../haiku/configure --cross-tools-source /home/vagrant/buildtools --build-cross-tools x86_64 
       chdir: /home/vagrant/generated.x86_64/
-  - name: Taking OWnership again on binary target folder
+  - name: Taking Ownership again on binary target folder
     file:
       path: /home/vagrant/generated.x86_64/
       state: directory
@@ -82,4 +78,5 @@
     shell:
       cmd: ./jam0 install
       chdir: /home/vagrant/buildtools/jam/
+
   
