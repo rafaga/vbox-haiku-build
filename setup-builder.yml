@@ -17,7 +17,7 @@
       - make 
       - glibc-devel 
       - zlib-devel 
-      - zstd 
+      - libzstd-devel
       - xorriso 
       - curl-devel 
       - byacc 
@@ -54,19 +54,36 @@
       recurse: yes
       owner: vagrant
       group: vagrant
-  - name: Creation of binary target for Haiku
+  - name: Creation of x86-64 binary target for Haiku
     file:
       path: /home/vagrant/generated.x86_64
       state: directory
       owner: vagrant
       group: vagrant
-  - name: creating configuration to build Haiku cross-compiler buildtools
+  - name: Creation of ARM binary target for Haiku
+    file:
+      path: /home/vagrant/generated.arm
+      state: directory
+      owner: vagrant
+      group: vagrant
+  - name: creating configuration to build Haiku cross-compiler buildtools for x86-64
     shell:
       cmd: ../haiku/configure --cross-tools-source /home/vagrant/buildtools --build-cross-tools x86_64 
       chdir: /home/vagrant/generated.x86_64/
-  - name: Taking Ownership again on binary target folder
+  - name: Taking Ownership again on binary target x86-64 folder
     file:
       path: /home/vagrant/generated.x86_64/
+      state: directory
+      recurse: yes
+      owner: vagrant
+      group: vagrant
+  - name: creating configuration to build Haiku cross-compiler buildtools for ARM
+    shell:
+      cmd: ../haiku/configure --cross-tools-source /home/vagrant/buildtools --build-cross-tools arm 
+      chdir: /home/vagrant/generated.arm/
+  - name: Taking Ownership again on binary target ARM folder
+    file:
+      path: /home/vagrant/generated.arm/
       state: directory
       recurse: yes
       owner: vagrant
